@@ -1,0 +1,88 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum MaintenanceType {
+  OIL_CHANGE       // Yağ Değişimi
+  FILTER_CHANGE    // Filtre Değişimi
+  BRAKE_SERVICE    // Fren Bakımı
+  TYRE_CHANGE      // Lastik Değişimi
+  CHAIN_SERVICE    // Zincir Bakımı
+  GENERAL_SERVICE  // Genel Bakım
+  OTHER            // Diğer
+}
+
+enum OilLevel {
+  NORMAL   // Normal
+  LOW      // Düşük
+  CRITICAL // Kritik
+}
+
+enum InspectionResult {
+  OK                 // Sorun Yok
+  MAINTENANCE_NEEDED // Bakım Gerekli
+  URGENT_ACTION      // Acil Müdahale
+}
+
+model Motorcycle {
+  id                  String    @id @default(uuid())
+  plate               String    @unique
+  brand               String
+  model               String
+  currentKm           Int
+  lastOilChangeKm     Int?
+  lastOilChangeDate   DateTime?
+  oilChangeIntervalKm Int       @default(3000)
+  insuranceStartDate  DateTime?
+  insuranceEndDate    DateTime?
+  inspectionExpiryDate DateTime?
+  notes               String?
+  isArchived          Boolean   @default(false)
+  createdAt           DateTime  @default(now())
+  updatedAt           DateTime  @updatedAt
+
+  maintenanceRecords  MaintenanceRecord[]
+  weeklyInspections   WeeklyInspection[]
+
+  @@index([plate])
+  @@index([isArchived])
+}
+
+model MaintenanceRecord {
+  id              String          @id @default(uuid())
+  motorcycleId    String
+  maintenanceType MaintenanceType
+  maintenanceDate DateTime
+  maintenanceKm   Int
+  description     String?
+  cost            Decimal?        @db.Decimal(10, 2)
+  createdAt       DateTime        @default(now())
+
+  motorcycle      Motorcycle      @relation(fields: [motorcycleId], references: [id], onDelete: Cascade)
+
+  @@index([motorcycleId])
+  @@index([maintenanceDate])
+}
+
+model WeeklyInspection {
+  id             String           @id @default(uuid())
+  motorcycleId   String
+  inspectionDate DateTime         @default(now())
+  inspectorName  String?
+  oilLevel       OilLevel         @default(NORMAL)
+  result         InspectionResult @default(OK)
+  notes          String?
+  createdAt      DateTime         @default(now())
+
+  motorcycle     Motorcycle       @relation(fields: [motorcycleId], references: [id], onDelete: Cascade)
+
+  @@index([motorcycleId])
+  @@index([inspectionDate])
+}
+
