@@ -13,7 +13,7 @@
               </div>
               <div>
                 <span class="text-base font-extrabold text-slate-900 tracking-tight leading-tight block">
-                  Motor Takip
+                  Rüzgar Kurye
                 </span>
                 <span class="text-[10px] font-semibold tracking-wider text-slate-400 uppercase block -mt-0.5">
                   Filo & Bakım Paneli
@@ -99,7 +99,7 @@
           </NuxtLink>
 
           <div class="pt-3 mt-2 border-t border-slate-100 flex items-center justify-between px-3 text-xs text-slate-400">
-            <span>Motor Takip Sistemi</span>
+            <span>Rüzgar Kurye Filo Takip</span>
             <span class="inline-flex items-center gap-1.5 text-emerald-600 font-medium">
               <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
               Çevrimiçi
@@ -117,7 +117,7 @@
     <!-- Sade Footer -->
     <footer class="border-t border-slate-200/80 bg-white/50 py-4 text-center text-xs text-slate-400">
       <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-        <span>© 2026 Motor Bakım Takip Sistemi — Filo Yönetim Çözümü</span>
+        <span>© 2026 Rüzgar Kurye — Motor Bakım ve Filo Takip Sistemi</span>
         <span class="text-[11px] text-slate-400">Nuxt 3 & Supabase PostgreSQL</span>
       </div>
     </footer>
